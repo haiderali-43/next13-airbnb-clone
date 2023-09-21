@@ -8,7 +8,13 @@ const Logo = () => {
   const router = useRouter();
   return (
     <div>
-      <Image src={"/logo.png"} alt="Logo" height={100} width={100} className="hidden md:block cursor-pointer" />
+      <Image
+        src={"/logo.png"}
+        alt="Logo"
+        height={100}
+        width={100}
+        className="hidden md:block cursor-pointer mt-1"
+      />
     </div>
   );
 };

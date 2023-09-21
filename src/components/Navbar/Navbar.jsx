@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Container from "../Container";
 import React from "react";
 import Logo from "./Logo";
@@ -13,7 +13,7 @@ const Navbar = () => {
           <div className="flex flex-row item-center justify-between gap-3  md:gap-0">
             <Logo />
             <Search />
-            <UserMenu/>
+            <UserMenu />
           </div>
         </Container>
       </div>
