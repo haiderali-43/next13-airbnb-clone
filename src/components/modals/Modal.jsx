@@ -1,6 +1,7 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import Button from "../Button";
 
 const Modal = ({
   isOpen,
@@ -71,6 +72,20 @@ const Modal = ({
                 >
                   <IoMdClose size={18} />
                 </button>
+                {/* Login Modal */}
+                <div className="text-lg font-semibold">{title}</div>
+              </div>
+              {/* body */}
+              <div className="p-6 relative flex-auto">{body}</div>
+              {/* footer */}
+              <div className="flex flex-col gap-2 p-6">
+                <div className="flex flex-row items-center gap-4 w-full">
+                  <Button
+                    disabled={disabled}
+                    label={actionLabel}
+                    onClick={handelSubmit}
+                  />
+                </div>
               </div>
             </div>
           </div>

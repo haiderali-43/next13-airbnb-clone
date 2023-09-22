@@ -1,4 +1,6 @@
 "use client";
+import React from 'react'; // You need to import React when using JSX
+
 const MenuItem = ({ onClick, label }) => {
   return (
     <div
@@ -18,3 +20,4 @@ const MenuItem = ({ onClick, label }) => {
 };
 
 export default MenuItem;
+
