@@ -94,6 +94,7 @@ const Modal = ({
                     onClick={handelSubmit}
                   />
                 </div>
+                {footer}
               </div>
             </div>
           </div>

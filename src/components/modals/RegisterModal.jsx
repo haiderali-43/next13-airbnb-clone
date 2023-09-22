@@ -8,6 +8,8 @@ import { useState } from "react";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
+import toast from "react-hot-toast";
+import Button from "../Button";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -32,7 +34,7 @@ const RegisterModal = () => {
         registerModal.onClose();
       })
       .catch((error) => {
-        console.log(error);
+        toast.error("Something went wrong");
       })
       .finally(() => {
         setIsLoading(false);
@@ -42,10 +44,60 @@ const RegisterModal = () => {
   // body content
   const bodyContent = (
     <div className="flex flex-col gap-4">
-        <Heading title='Welcome to Airbnb'  subtitle='Create a new Account!'  />
-        <Input/>
+      <Heading title="Welcome to Airbnb" subtitle="Create a new Account!" />
+
+      <Input
+        id="name"
+        label="Name"
+        register={register}
+        errors={errors}
+        disbaled={isLoading}
+        required
+      />
+      <Input
+        id="email"
+        label="Email"
+        register={register}
+        errors={errors}
+        disbaled={isLoading}
+        required
+      />
+      <Input
+        id="password"
+        label="Password"
+        type="password"
+        register={register}
+        errors={errors}
+        disbaled={isLoading}
+        required
+      />
     </div>
-  )
+  );
+  // footer content
+  const footerContent = (
+    <div className="flex flex-col gap-4 mt-3">
+      <hr />
+      <Button
+        outline
+        label="Continue with Google"
+        Icon={FcGoogle}
+        onClick={() => {}}
+      />
+      <Button
+        outline
+        label="Continue with Github"
+        Icon={AiFillGithub}
+        onClick={() => {}}
+      />
+      {/* already have an account */}
+      <div className="flex flex-row items-center justify-center gap-4">
+        <div>Already have a account?</div>
+        <div className="cursor-pointer text-neutral-800 hover:underline" onClick={registerModal.onClose}>
+          Login
+        </div>
+      </div>
+    </div>
+  );
   return (
     <div>
       <Modal
@@ -56,6 +108,7 @@ const RegisterModal = () => {
         onSubmit={handleSubmit(onSubmit)}
         onClose={registerModal.onClose}
         body={bodyContent}
+        footer={footerContent}
       />
     </div>
   );
