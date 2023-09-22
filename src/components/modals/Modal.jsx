@@ -12,7 +12,7 @@ const Modal = ({
   footer,
   actionLabel,
   secondaryAction,
-  secondaryLabel,
+  secondaryActionLabel,
   disabled,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
@@ -80,6 +80,14 @@ const Modal = ({
               {/* footer */}
               <div className="flex flex-col gap-2 p-6">
                 <div className="flex flex-row items-center gap-4 w-full">
+                  {secondaryAction && secondaryActionLabel && (
+                    <Button
+                    outline
+                      disabled={disabled}
+                      label={secondaryActionLabel}
+                      onClick={handleSecondaryAction}
+                    />
+                  )}
                   <Button
                     disabled={disabled}
                     label={actionLabel}
