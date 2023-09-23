@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 
-const Avatar = () => {
+const Avatar = ({ src }) => {
   return (
     <div>
       <Image
@@ -9,7 +9,7 @@ const Avatar = () => {
         width={30}
         alt="Avatar"
         className="rounded-full"
-        src={"/placeholder.jpg"}
+        src={src || "/placeholder.jpg"}
       />
     </div>
   );
