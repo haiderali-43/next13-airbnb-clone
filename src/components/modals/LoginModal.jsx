@@ -46,11 +46,11 @@ const LoginModal = () => {
       }
     });
   };
-  // toogle modals 
-  const toggleModals = useCallback(()=>{
+  // toogle modals
+  const toggleModals = useCallback(() => {
     loginModal.onClose();
     registerModal.onOpen();
-  },[loginModal, registerModal])
+  }, [loginModal, registerModal]);
 
   // body content
   const bodyContent = (
@@ -94,9 +94,9 @@ const LoginModal = () => {
       />
       {/* already have an account */}
       <div className="flex flex-row items-center justify-center gap-4">
-        <div>Don&qrsuo;t have an account?</div>
+        <div>Don't have an account?</div>
         <div
-          className="cursor-pointer text-neutral-800 hover:underline"
+          className="cursor-pointer text-blue-600 hover:underline"
           onClick={toggleModals}
         >
           Signup

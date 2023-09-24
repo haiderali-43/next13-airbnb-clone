@@ -100,7 +100,7 @@ const RegisterModal = () => {
       {/* already have an account */}
       <div className="flex flex-row items-center justify-center gap-4">
         <div>Already have a account?</div>
-        <div className="cursor-pointer text-neutral-800 hover:underline" onClick={toggleModals}>
+        <div className="cursor-pointer text-blue-600 hover:underline" onClick={toggleModals}>
           Login
         </div>
       </div>

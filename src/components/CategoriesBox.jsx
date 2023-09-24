@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import qs from "query-string";
 
-const CategoriesBox = ({ icon: Icon, label, selected }) => {
+const CategoriesBox = ({ icon: Icon, label, selected = false }) => {
   const router = useRouter();
   const params = useSearchParams();
 
@@ -33,6 +33,7 @@ const CategoriesBox = ({ icon: Icon, label, selected }) => {
 
   return (
     <div
+    onClick={handelClick}
       className={`
         flex 
         flex-col 
@@ -41,6 +42,7 @@ const CategoriesBox = ({ icon: Icon, label, selected }) => {
         gap-2
         p-3
         border-b-2
+        border-black
         hover:text-neutral-800
         transition
         cursor-pointer
