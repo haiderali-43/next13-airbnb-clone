@@ -39,10 +39,10 @@ const LoginModal = () => {
       if (callback?.ok) {
         toast.success("Sucessfully Logged in");
         router.refresh();
-        loginModal.onClose()
+        loginModal.onClose();
       }
-      if(callback.error){
-        toast.error(callback.error)
+      if (callback.error) {
+        toast.error(callback.error);
       }
     });
   };
@@ -79,13 +79,13 @@ const LoginModal = () => {
         outline
         label="Continue with Google"
         Icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         label="Continue with Github"
         Icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />
       {/* already have an account */}
       <div className="flex flex-row items-center justify-center gap-4">
