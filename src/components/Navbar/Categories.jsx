@@ -18,6 +18,7 @@ import { MdOutlineVilla } from "react-icons/md";
 
 import Container from "../Container";
 import CategoriesBox from "../CategoriesBox";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export const categories = [
   {
@@ -98,6 +99,13 @@ export const categories = [
 ];
 
 const Categories = () => {
+  const params = useSearchParams();
+  const pathName = usePathname();
+  const category = params?.get("category");
+  const isMainPage = pathName === "/";
+  if (!isMainPage) {
+    return null;
+  }
   return (
     <Container>
       <div
@@ -111,7 +119,12 @@ const Categories = () => {
         "
       >
         {categories.map((item) => (
-          <CategoriesBox key={item.label} label={item.label} icon={item.icon} />
+          <CategoriesBox
+            key={item.label}
+            label={item.label}
+            icon={item.icon}
+            selected={category === item.label}
+          />
         ))}
       </div>
     </Container>

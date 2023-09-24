@@ -3,7 +3,7 @@ import useRegisterModal from "@/hooks/useRegisterModal";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
@@ -46,6 +46,11 @@ const LoginModal = () => {
       }
     });
   };
+  // toogle modals 
+  const toggleModals = useCallback(()=>{
+    loginModal.onClose();
+    registerModal.onOpen();
+  },[loginModal, registerModal])
 
   // body content
   const bodyContent = (
@@ -89,12 +94,12 @@ const LoginModal = () => {
       />
       {/* already have an account */}
       <div className="flex flex-row items-center justify-center gap-4">
-        <div>Already have a account?</div>
+        <div>Don&qrsuo;t have an account?</div>
         <div
           className="cursor-pointer text-neutral-800 hover:underline"
-          onClick={registerModal.onClose}
+          onClick={toggleModals}
         >
-          Login
+          Signup
         </div>
       </div>
     </div>
