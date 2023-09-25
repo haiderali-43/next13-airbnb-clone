@@ -12,6 +12,7 @@ import { categories } from "../navbar/Categories";
 import { useState, useMemo } from "react";
 
 import Heading from "../Heading";
+import Map from "../Map";
 
 const STEPS = {
   CATEGORY: 0,
@@ -50,6 +51,7 @@ const RentModal = () => {
   });
 
   const category = watch("category");
+  const location = watch('location')
 
   const setCustomValue = (id, value) => {
     setValue(id, value, {
@@ -121,9 +123,10 @@ const RentModal = () => {
           subtitle="Help guests find you!"
         />
         <CountrySelect
-          value={location}
+         value={location}
           onChange={(value) => setCustomValue("location", value)}
         />
+        <Map/>
       </div>
     );
   }
