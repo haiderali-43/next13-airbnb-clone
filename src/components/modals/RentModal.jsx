@@ -15,6 +15,10 @@ import Heading from "../Heading";
 import dynamic from "next/dynamic";
 import Counter from "../inputs/Counter";
 import ImageUpload from "../inputs/ImageUpload";
+import Input from "../inputs/Input";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const STEPS = {
   CATEGORY: 0,
@@ -27,6 +31,8 @@ const STEPS = {
 
 const RentModal = () => {
   const rentModal = useRentModal();
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const [step, setStep] = useState(STEPS.CATEGORY);
 
@@ -54,8 +60,9 @@ const RentModal = () => {
   const category = watch("category");
   const location = watch("location");
   const guestCount = watch("guestCount");
-  const roomCount = watch('roomCount')
-  const bathroomCount = watch('bathroomCount')
+  const roomCount = watch("roomCount");
+  const bathroomCount = watch("bathroomCount");
+  const imageSrc = watch("imageSrc");
 
   const Map = useMemo(
     () =>
@@ -88,6 +95,28 @@ const RentModal = () => {
 
     return "Next";
   }, [step]);
+  // submit function
+  const onSubmit = (data) => {
+    if (step !== STEPS.PRICE) {
+      return onNext;
+    }
+    setIsLoading(true);
+    axios
+      .post("/api/listings", data)
+      .then(() => {
+        toast.success("Listing Created");
+        router.refresh();
+        reset();
+        setStep(STEPS.CATEGORY);
+        rentModal.onClose();
+      })
+      .catch(() => {
+        toast.error("Something wrong");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   const secondaryActionLabel = useMemo(() => {
     if (step === STEPS.CATEGORY) {
@@ -126,7 +155,7 @@ const RentModal = () => {
       </div>
     </div>
   );
-// location step
+  // location step
   if (step === STEPS.LOCATION) {
     bodyContent = (
       <div className="flex flex-col gap-8">
@@ -173,22 +202,75 @@ const RentModal = () => {
       </div>
     );
   }
- // images step
- if(step === STEPS.IMAGES){
-  bodyContent = (
-    <div className="flex flex-row gap-8">
-      <Heading title="Add photos of your place" subtitle="Show guests what your place look like!" />
-      <ImageUpload/>
-    </div>
-  )
-
- }
+  // images step
+  if (step === STEPS.IMAGES) {
+    bodyContent = (
+      <div className="flex flex-row gap-8">
+        <Heading
+          title="Add photos of your place"
+          subtitle="Show guests what your place look like!"
+        />
+        <ImageUpload
+          value={imageSrc}
+          onChange={(value) => setCustomValue("imageSrc", value)}
+        />
+      </div>
+    );
+  }
+  // description step
+  if (step === STEPS.DESCRIPTION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="How would you describe your place"
+          subtitle="Short and sweet works best!"
+        />
+        <Input
+          id="title"
+          label="Title"
+          disbaled={isLoading}
+          required
+          errors={errors}
+          register={register}
+        />
+        <hr />
+        <Input
+          id="description"
+          label="Description"
+          disbaled={isLoading}
+          required
+          errors={errors}
+          register={register}
+        />
+      </div>
+    );
+  }
+  // price step
+  if (step === STEPS.PRICE) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Now Set your price"
+          subtitle="How much do you charge per night"
+        />
+        <Input
+          id="price"
+          label="Price"
+          formatPrice
+          register={register}
+          disbaled={isLoading}
+          errors={errors}
+          type="number"
+        />
+      </div>
+    );
+  }
   return (
     <Modal
       isOpen={rentModal.isOpen}
       title="Airbnb your home!"
       actionLabel={actionLabel}
-      onSubmit={onNext}
+      onSubmit={handleSubmit(onSubmit)}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
       onClose={rentModal.onClose}
