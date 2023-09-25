@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import qs from "query-string";
 
-const CategoriesBox = ({ icon: Icon, label, selected = false }) => {
+const CategoriesBox = ({ icon: Icon, label, selected  }) => {
   const router = useRouter();
   const params = useSearchParams();
 
