@@ -15,8 +15,8 @@ const Input = ({
     <div className="w-full relative">
       {formatPrice && (
         <BiDollar
-          size={24}
-          className="absolute top-5 left-2 text-neutral-700"
+          size={20}
+          className="absolute top-7 left-2 text-neutral-700"
         />
       )}
       <input
@@ -25,7 +25,7 @@ const Input = ({
         {...register(id, { required })}
         placeholder=" "
         type={type}
-        className={`peer w-full p-4 pt-6 font-light bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed
+        className={`peer w-full px-4 p-4 pt-6 font-light bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed
         ${formatPrice ? "pl-6" : "pl-4"} 
         ${errors[id] ? "border-rose-500" : "border-neutral-300"} ${
           errors[id] ? "focus:border-rose-500" : "focus:border-black"
