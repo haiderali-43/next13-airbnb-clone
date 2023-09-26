@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import prisma from "@/app/libs/prismadb";
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import prisma from "@/libs/prismadb";
+import getCurrentUser from "@/actions/getCurrentUser";
 
 export async function POST(request) {
   const currentUser = await getCurrentUser();
@@ -24,7 +24,7 @@ export async function POST(request) {
 
   Object.keys(body).forEach((value) => {
     if (!body[value]) {
-      return NextResponse.error();
+      NextResponse.error();
     }
   });
 

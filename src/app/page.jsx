@@ -4,15 +4,15 @@ import Container from "@/components/Container";
 import EmptyState from "@/components/EmptyState";
 
 export default async function Home() {
-  const listings = await getListings();
+  // const listings = await getListings();
   
-  if (listings.length === 0) {
-    return (
-      <ClientOnly>
-        <EmptyState showrest />
-      </ClientOnly>
-    );
-  }
+  // if (listings.length === 0) {
+  //   return (
+  //     <ClientOnly>
+  //       <EmptyState showrest />
+  //     </ClientOnly>
+  //   );
+  // }
   return (
     <ClientOnly>
       <Container>

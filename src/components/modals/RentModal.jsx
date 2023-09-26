@@ -93,12 +93,12 @@ const RentModal = () => {
       return "Create";
     }
 
-    return "Next";
+    return onNext();
   }, [step]);
   // submit function
   const onSubmit = (data) => {
     if (step !== STEPS.PRICE) {
-      return onNext;
+      return "Next";
     }
     setIsLoading(true);
     axios
