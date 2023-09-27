@@ -55,11 +55,10 @@ const Home = async ({ searchParams }) => {
       </ClientOnly>
     );
   } catch (error) {
-    // Handle and log the error appropriately
+
     console.error("Error in Home component:", error);
 
-    // You might want to display an error message to the user here.
-    // For example, you can render a message component with the error message.
+  
     return (
       <div>
         <p>An error occurred: {error.message}</p>
