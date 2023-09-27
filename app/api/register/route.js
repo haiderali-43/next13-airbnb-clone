@@ -1,5 +1,5 @@
 import { hash } from "bcrypt";
-import prisma from '@/libs/prismadb'
+import prisma from '../../libs/prismadb'
 
 export async function POST(request) {
   const body = await request.json();

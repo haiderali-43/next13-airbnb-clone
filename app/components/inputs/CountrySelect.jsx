@@ -1,5 +1,5 @@
 "use client";
-import useCountries from "@/hooks/useCountries";
+import useCountries from "../../hooks/useCountries";
 import Select from "react-select";
 
 const CountrySelect = ({ value, onChange }) => {

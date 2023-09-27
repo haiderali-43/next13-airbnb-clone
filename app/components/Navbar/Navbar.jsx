@@ -1,10 +1,10 @@
 "use client";
 import Container from "../Container";
 import React from "react";
-import Logo from "./Logo";
-import Search from "./Search";
-import UserMenu from "./UserMenu";
-import Categories from "./Categories";
+import Logo from "../Navbar/Logo";
+import Search from "../Navbar/Search";
+import UserMenu from "../Navbar/UserMenu";
+import Categories from "../Navbar/Categories";
 
 const Navbar = ({currentUser}) => {
   console.log(currentUser)

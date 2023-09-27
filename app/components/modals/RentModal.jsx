@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 
 import Modal from "./Modal";
-import useRentModal from "@/hooks/useRentModal";
+import useRentModal from "../../hooks/useRentModal";
 
 import CategoryInput from "../inputs/CategoryInput";
 import CountrySelect from "../inputs/CountrySelect";

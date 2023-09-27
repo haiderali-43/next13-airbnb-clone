@@ -1,4 +1,4 @@
-import prisma from "@/libs/prismadb";
+import prisma from "../libs/prismadb";
 
 export default async function getListings() {
   try {
@@ -7,7 +7,11 @@ export default async function getListings() {
         createdAt: "desc",
       },
     });
+    const safeListing = listings.map((listing)=>({
+      ...listing,
+      createdAt: listing.createdAt.toISOString()
+    }))
   } catch (error) {
-    console.log(error);;
+    throw new Error(error)
   }
 }

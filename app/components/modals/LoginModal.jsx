@@ -1,8 +1,7 @@
 "use client";
-import useRegisterModal from "@/hooks/useRegisterModal";
+import useRegisterModal from "../../hooks/useRegisterModal";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useCallback, useState } from "react";
 import Modal from "./Modal";
@@ -10,21 +9,21 @@ import Heading from "../Heading";
 import Input from "../inputs/Input";
 import toast from "react-hot-toast";
 import Button from "../Button";
+import useLoginModal from "../../hooks/useLoginModal";
 import { signIn } from "next-auth/react";
-import useLoginModal from "@/hooks/useLoginModal";
+import { useRouter } from "next/navigation";
 
-
-const RegisterModal = () => {
+const LoginModal = () => {
   const registerModal = useRegisterModal();
-  const loginModal = useLoginModal()
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -32,36 +31,32 @@ const RegisterModal = () => {
 
   const onSubmit = (data) => {
     setIsLoading(true);
-    axios
-      .post("/api/register", data)
-      .then(() => {
-        registerModal.onClose();
-      })
-      .catch((error) => {
-        toast.error("Something went wrong");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    }).then((callback) => {
+      setIsLoading(false);
+      if (callback?.ok) {
+        toast.success("Sucessfully Logged in");
+        router.refresh();
+        loginModal.onClose();
+      }
+      if (callback.error) {
+        toast.error(callback.error);
+      }
+    });
   };
-   // toggle modals 
-   const toggleModals = useCallback(()=>{
-    registerModal.onClose()
-    loginModal.onOpen()
-   },[loginModal, registerModal])
+  // toogle modals
+  const toggleModals = useCallback(() => {
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [loginModal, registerModal]);
+
   // body content
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="Welcome to Airbnb" subtitle="Create a new Account!" />
+      <Heading title="Welccome Back" subtitle="Login to your account" />
 
-      <Input
-        id="name"
-        label="Name"
-        register={register}
-        errors={errors}
-        disbaled={isLoading}
-        required
-      />
       <Input
         id="email"
         label="Email"
@@ -89,19 +84,22 @@ const RegisterModal = () => {
         outline
         label="Continue with Google"
         Icon={FcGoogle}
-        onClick={() => signIn('google') }
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         label="Continue with Github"
         Icon={AiFillGithub}
-        onClick={() => signIn('github')}
+        onClick={() => signIn("github")}
       />
       {/* already have an account */}
       <div className="flex flex-row items-center justify-center gap-4">
-        <div>Already have a account?</div>
-        <div className="cursor-pointer text-blue-600 hover:underline" onClick={toggleModals}>
-          Login
+        <div>Don`&aspo;`t have an account?</div>
+        <div
+          className="cursor-pointer text-blue-600 hover:underline"
+          onClick={toggleModals}
+        >
+          Signup
         </div>
       </div>
     </div>
@@ -110,11 +108,11 @@ const RegisterModal = () => {
     <div>
       <Modal
         disabled={isLoading}
-        isOpen={registerModal.isOpen}
-        title="Register"
+        isOpen={loginModal.isOpen}
+        title="Login"
         actionLabel="Continue"
         onSubmit={handleSubmit(onSubmit)}
-        onClose={registerModal.onClose}
+        onClose={loginModal.onClose}
         body={bodyContent}
         footer={footerContent}
       />
@@ -122,4 +120,4 @@ const RegisterModal = () => {
   );
 };
 
-export default RegisterModal;
+export default LoginModal;
