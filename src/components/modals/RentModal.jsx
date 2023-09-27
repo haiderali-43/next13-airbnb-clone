@@ -93,12 +93,12 @@ const RentModal = () => {
       return "Create";
     }
 
-    return onNext();
+    return "Next";
   }, [step]);
   // submit function
   const onSubmit = (data) => {
     if (step !== STEPS.PRICE) {
-      return "Next";
+      return onNext();
     }
     setIsLoading(true);
     axios
@@ -110,8 +110,9 @@ const RentModal = () => {
         setStep(STEPS.CATEGORY);
         rentModal.onClose();
       })
-      .catch(() => {
+      .catch((error) => {
         toast.error("Something wrong");
+        console.log(error)
       })
       .finally(() => {
         setIsLoading(false);
