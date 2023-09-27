@@ -8,6 +8,6 @@ export default async function getListings() {
       },
     });
   } catch (error) {
-    throw new Error(error);
+    console.log(error);;
   }
 }

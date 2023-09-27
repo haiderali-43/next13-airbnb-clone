@@ -1,33 +1,71 @@
-import { getListings } from "@/actions/getListings";
-import ClientOnly from "@/components/ClientOnly";
 import Container from "@/components/Container";
-import EmptyState from "@/components/EmptyState";
-import { reactProductionProfiling } from "../../next.config";
 import ListingCard from "@/components/listings/ListingCard";
+import EmptyState from "@/components/EmptyState";
+
+import getListings from "@/actions/getListings";
 import { getCurrentUser } from "@/actions/getCurrentUser";
+import ClientOnly from "@/components/ClientOnly";
 
-export default async function Home() {
-  const listings = await getListings();
-  const currentUser = await getCurrentUser()
+const Home = async ({ searchParams }) => {
+  try {
+    const listings = await getListings(searchParams);
+    const currentUser = await getCurrentUser();
 
-  if (listings.length === 0) {
+    // if (!listings || !Array.isArray(listings)) {
+    //   throw new Error("Invalid listings data");
+    // }
+
+    // if (!currentUser) {
+    //   throw new Error("User data not available");
+    // }
+
+    if (listings.length === 0) {
+      return (
+        <ClientOnly>
+          <EmptyState showReset />
+        </ClientOnly>
+      );
+    }
+
     return (
       <ClientOnly>
-        <EmptyState showRest />
+        <Container>
+          <div
+            className="
+              pt-24
+              grid
+              grid-cols-1
+              sm:grid-cols-2
+              md:grid-cols-3
+              lg:grid-cols-4
+              xl:grid-cols-5
+              2xl:grid-cols-6
+              gap-8
+            "
+          >
+            {listings.map((listing) => (
+              <ListingCard
+                currentUser={currentUser}
+                key={listing.id}
+                data={listing}
+              />
+            ))}
+          </div>
+        </Container>
       </ClientOnly>
     );
+  } catch (error) {
+    // Handle and log the error appropriately
+    console.error("Error in Home component:", error);
+
+    // You might want to display an error message to the user here.
+    // For example, you can render a message component with the error message.
+    return (
+      <div>
+        <p>An error occurred: {error.message}</p>
+      </div>
+    );
   }
-  return (
-    <ClientOnly>
-      <Container>
-        <div className="pt-24 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
-          {listings.map((listing) => {
-            return(
-              <ListingCard key={listing.id} data={listing}  />
-            );
-          })}
-        </div>
-      </Container>
-    </ClientOnly>
-  );
-}
+};
+
+export default Home;

@@ -23,7 +23,7 @@ const ImageUpload = ({ onChange, value }) => {
         maxFiles: 1,
       }}
     >
-      {({ open = () => {} }) => {
+      {({ open}) => {
         return (
           <div
             onClick={() => open?.()}

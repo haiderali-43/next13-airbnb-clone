@@ -112,7 +112,7 @@ const RentModal = () => {
       })
       .catch((error) => {
         toast.error("Something wrong");
-        console.log(error)
+        console.log(error);
       })
       .finally(() => {
         setIsLoading(false);
