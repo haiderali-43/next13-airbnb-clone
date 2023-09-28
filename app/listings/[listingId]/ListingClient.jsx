@@ -10,6 +10,7 @@ import { differenceInDays, eachDayOfInterval } from "date-fns";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
+import ListingReservation from "../../components/listings/ListingReservation";
 
 const initialDateRange = {
   startDate: new Date(),
@@ -88,9 +89,19 @@ const ListingClient = ({ listing, currentUser, reservation = [] }) => {
             id={listing.id}
             currentUser={currentUser}
           />
-          <div className="order-first mb-10 md:order-last md:col-span-3"></div>
           <div className="grid grid-cols-1 md:grid-cols-7 md:gap-7 mt-10">
-            <ListingInfo />
+            <ListingInfo
+              user={listing.user}
+              category={category}
+              description={listing.description}
+              roomCount={listing.roomCount}
+              guestCount={listing.guestCount}
+              bathroomCount={listing.bathroomCount}
+              locationValue={listing.locationValue}
+            />
+          </div>
+          <div className="order-first mb-10 md:order-last md:col-span-3">
+            <ListingReservation price={listing.price}/>
           </div>
         </div>
       </div>
