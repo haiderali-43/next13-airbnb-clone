@@ -11,6 +11,7 @@ export default async function getListings() {
       ...listing,
       createdAt: listing.createdAt.toISOString()
     }))
+    return safeListing
   } catch (error) {
     throw new Error(error)
   }

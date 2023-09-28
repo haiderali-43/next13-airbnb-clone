@@ -8,12 +8,11 @@ import ClientOnly from "./components/ClientOnly";
 const Home = async ({ searchParams }) => {
   const listings = await getListings(searchParams);
   const currentUser = await getCurrentUser();
-  const isEmpty = true;
 
-  if (isEmpty) {
+  if (listings.length === 0) {
     return (
       <ClientOnly>
-        <EmptyState showReset />
+        <EmptyState showRest={true}/>
       </ClientOnly>
     );
   }
