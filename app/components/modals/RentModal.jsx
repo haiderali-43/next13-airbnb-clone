@@ -96,23 +96,47 @@ const RentModal = () => {
     return "Next";
   }, [step]);
   // submit function
-  const onSubmit = (data) => {
+  const onSubmit = (
+    category,
+    location,
+    guestCount,
+    roomCount,
+    bathroomCount,
+    imageSrc,
+    title,
+    price,
+    description
+  ) => {
     if (step !== STEPS.PRICE) {
       return onNext();
     }
+
     setIsLoading(true);
+
+    // Create an object with the data to send in the request body
+    const listingData = {
+      category,
+      location,
+      guestCount,
+      roomCount,
+      bathroomCount,
+      imageSrc,
+      title,
+      price,
+      description,
+    };
+
     axios
-      .post("/api/listings", data)
+      .post("/api/listings", listingData) // Pass the data as the second argument
       .then(() => {
-        toast.success("Listing Created");
+        toast.success("Listing created!");
         router.refresh();
         reset();
         setStep(STEPS.CATEGORY);
         rentModal.onClose();
       })
-      .catch((error) => {
-        toast.error("Something wrong");
-        console.log(error);
+      .catch(() => {
+        toast.error("Something went wrong.");
       })
       .finally(() => {
         setIsLoading(false);

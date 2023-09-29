@@ -1,11 +1,12 @@
 "use client";
-import { Range } from "react-date-range";
+
 import Calender from "../inputs/Calender";
+import Button from "../Button";
 
 const ListingReservation = ({
   price,
   disableDates,
-  dateRange = Range,
+  dateRange,
   onChangeDate = () => {},
   onSubmit,
   totalPrice,
@@ -23,6 +24,14 @@ const ListingReservation = ({
         disableDates={disableDates}
         onChange={(value) => onChangeDate(value.selection)}
       />
+      <hr />
+      <div className="p-4">
+        <Button disabled={disabled} label="Reserve" onClick={onSubmit} />
+      </div>
+      <div className="p-4 flex flex-row items-center justify-between text-lg font-semibold">
+        <div>Total</div>
+        <div>$ {totalPrice}</div>
+      </div>
     </div>
   );
 };
