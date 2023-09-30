@@ -13,10 +13,9 @@ import Button from "../Button";
 import { signIn } from "next-auth/react";
 import useLoginModal from "../../hooks/useLoginModal";
 
-
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
-  const loginModal = useLoginModal()
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -35,7 +34,9 @@ const RegisterModal = () => {
     axios
       .post("/api/register", data)
       .then(() => {
+        toast.success('Successfully registered')
         registerModal.onClose();
+        loginModal.onOpen();
       })
       .catch((error) => {
         toast.error("Something went wrong");
@@ -44,11 +45,11 @@ const RegisterModal = () => {
         setIsLoading(false);
       });
   };
-   // toggle modals 
-   const toggleModals = useCallback(()=>{
-    registerModal.onClose()
-    loginModal.onOpen()
-   },[loginModal, registerModal])
+  // toggle modals
+  const toggleModals = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [loginModal, registerModal]);
   // body content
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -89,18 +90,21 @@ const RegisterModal = () => {
         outline
         label="Continue with Google"
         Icon={FcGoogle}
-        onClick={() => signIn('google') }
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         label="Continue with Github"
         Icon={AiFillGithub}
-        onClick={() => signIn('github')}
+        onClick={() => signIn("github")}
       />
       {/* already have an account */}
       <div className="flex flex-row items-center justify-center gap-4">
         <div>Already have a account?</div>
-        <div className="cursor-pointer text-blue-600 hover:underline" onClick={toggleModals}>
+        <div
+          className="cursor-pointer text-blue-600 hover:underline"
+          onClick={toggleModals}
+        >
           Login
         </div>
       </div>
