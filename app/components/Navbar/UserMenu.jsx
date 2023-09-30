@@ -7,11 +7,13 @@ import useRegisterModal from "../../hooks/useRegisterModal";
 import useLoginModal from "../../hooks/useLoginModal";
 import { signOut } from "next-auth/react";
 import useRentModal from "../../hooks/useRentModal";
+import {useRouter} from "next/navigation";
 
 const UserMenu = ({ currentUser }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
+  const router = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = useCallback(() => {
@@ -49,9 +51,9 @@ const UserMenu = ({ currentUser }) => {
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
-                <MenuItem onClick={() => {}} label="My trips" />
+                <MenuItem onClick={() => router.push('/trips')} label="My trips" />
                 <MenuItem onClick={() => {}} label="My favourites" />
-                <MenuItem onClick={() => {}} label="My Reservations" />
+                <MenuItem onClick={() => router.push('/reservations')} label="My Reservations" />
                 <MenuItem onClick={() => {}} label="My Properties" />
                 <MenuItem onClick={rentModal.onOpen} label="Airbnb my home" />
                 <hr />
@@ -60,7 +62,7 @@ const UserMenu = ({ currentUser }) => {
             ) : (
               <>
                 <MenuItem onClick={loginModal.onOpen} label="Login" />
-                <MenuItem onClick={rentModal.onOpen} label="Signup" />
+                <MenuItem onClick={registerModal.onOpen} label="Signup" />
               </>
             )}
           </div>

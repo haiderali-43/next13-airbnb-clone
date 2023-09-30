@@ -53,7 +53,7 @@ const ListingClient = ({ listing, currentUser, reservation = [] }) => {
       .then(() => {
         toast.success("Place Reserved");
         setDateRange(initialDateRange);
-        router.refresh();
+        router.push('/trips');
         // trips
       })
       .catch(() => {
